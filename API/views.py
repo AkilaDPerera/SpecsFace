@@ -30,7 +30,7 @@ def processImages(request):
         fs.delete(face.name)
         fs.delete(frame.name)
     except:
-        return HttpResponse("Lol erroror penna")
+        return render(request, "404.html")
     else:
         return HttpResponse(base64.b64encode(open("media/output.jpg", "rb").read()), content_type="image/png")
 
