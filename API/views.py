@@ -14,21 +14,20 @@ def dataUploadingForm(request):
     return render(request, "dataUploadingPage.html")
 
 def processImages(request):
-    return render(request, "404.html")
-    # face = request.FILES["face"]
-    # frame = request.FILES["frame"]
-    # fs = FileSystemStorage()
-    # face_url = fs.save(face.name, face)
-    # frame_url = fs.save(frame.name, frame)
+    face = request.FILES["face"]
+    frame = request.FILES["frame"]
+    fs = FileSystemStorage()
+    face_url = fs.save(face.name, face)
+    frame_url = fs.save(frame.name, frame)
 
-    # uploaded_face_url = fs.url(face_url)
-    # uploaded_frame_url = fs.url(frame_url)
+    uploaded_face_url = fs.url(face_url)
+    uploaded_frame_url = fs.url(frame_url)
     
-    # face_spec.process_image("."+uploaded_face_url, "."+uploaded_frame_url)
+    face_spec.process_image("."+uploaded_face_url, "."+uploaded_frame_url)
     
-    # # Clear storage
-    # fs.delete(face.name)
-    # fs.delete(frame.name)
+    # Clear storage
+    fs.delete(face.name)
+    fs.delete(frame.name)
 
-    # return HttpResponse(base64.b64encode(open("media/output.jpg", "rb").read()), content_type="image/png")
+    return HttpResponse(base64.b64encode(open("media/output.jpg", "rb").read()), content_type="image/png")
 
