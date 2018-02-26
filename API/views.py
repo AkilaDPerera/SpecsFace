@@ -23,7 +23,7 @@ def processImages(request):
     uploaded_face_url = fs.url(face_url)
     uploaded_frame_url = fs.url(frame_url)
     
-    face_spec.process_image(uploaded_face_url, uploaded_frame_url)
+    face_spec.process_image("."+uploaded_face_url, "."+uploaded_frame_url)
     
     # Clear storage
     fs.delete(face.name)
