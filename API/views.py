@@ -28,7 +28,6 @@ def processImages(request):
     # Clear storage
     fs.delete(face.name)
     fs.delete(frame.name)
-    image_data = open("media/output.jpg", "rb").read()
 
-    return HttpResponse(base64.b64encode(image_data), content_type="image/png")
+    return HttpResponse(base64.b64encode(open("media/output.jpg", "rb").read()), content_type="image/png")
 
