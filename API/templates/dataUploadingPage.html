@@ -1,0 +1,58 @@
+<html>
+<head>
+    {% load static %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+</head>
+
+<body>
+
+    <script>
+        function hexToBase64(str) {
+            return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+        }
+        function extract_action_url_handler(event){
+            return event.originalEvent.srcElement.getAttribute('action');
+        }
+        function send_post_request(event){
+            event.preventDefault();
+            var url = extract_action_url_handler(event);
+            var form = new FormData(event.originalEvent.srcElement);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function(data){
+                    document.getElementById("OutputImage").src = "data:image/jpeg;base64,"+data;
+                }
+            });
+        }
+        $(document).ready(function() {
+            $('#FaceSpecFormSubmit').click(function(event) {
+                $('#FaceSpecForm').submit(send_post_request);
+            });
+        });
+    </script>
+
+    <form action="process_images/" id="FaceSpecForm" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="face">Face image: </label>
+            <input type="file" name="face" accept="image/*">
+        </div>
+        
+        <div>
+            <label for="frame">Frame: </label>
+            <input type="file" name="frame" accept="image/*">
+        </div>
+        
+        <input type="submit" id="FaceSpecFormSubmit">
+    </form>
+
+    <div>
+        <img id="OutputImage" src="" alt="">
+    </div>
+</body>
+</html>
