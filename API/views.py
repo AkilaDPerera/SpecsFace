@@ -16,20 +16,21 @@ def dataUploadingForm(request):
 def processImages(request):
     face = request.FILES["face"]
     frame = request.FILES["frame"]
+    outputname = "output.jpg"
+
     fs = FileSystemStorage()
     face_url = fs.save(face.name, face)
     frame_url = fs.save(frame.name, frame)
-
-    uploaded_face_url = fs.url(face_url)
-    uploaded_frame_url = fs.url(frame_url)
-    return HttpResponse(uploaded_face_url)
-    # face_spec.process_image("."+uploaded_face_url, "."+uploaded_frame_url)
+    uploaded_face_url = settings.MEDIA_ROOT+"/"+face_url #fs.url(face_url)
+    uploaded_frame_url = settings.MEDIA_ROOT+"/"+frame_url  #fs.url(frame_url)
     
-    # # Clear storage
-    # fs.delete(face.name)
-    # fs.delete(frame.name)
+    face_spec.process_image(uploaded_face_url, uploaded_frame_url, settings.MEDIA_ROOT+"/"+outputname)
+    
+    # Clear storage
+    fs.delete(face.name)
+    fs.delete(frame.name)
+    
+    img = open(settings.MEDIA_ROOT+"/"+outputname, "rb").read()
 
-    # img = open("media/output.jpg", "rb").read()
-
-    # return HttpResponse(base64.b64encode(img), content_type="image/png")
+    return HttpResponse(base64.b64encode(img), content_type="image/png")
 

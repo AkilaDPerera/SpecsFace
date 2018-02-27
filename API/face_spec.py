@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def process_image(face="media/face.jpg", frame="media/spec.png"):
+def process_image(face="media/face.jpg", frame="media/spec.png", outputname="media/output.jpg"):
   face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt.xml")
   eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
 
@@ -57,6 +57,6 @@ def process_image(face="media/face.jpg", frame="media/spec.png"):
   
     #final_img = cv2.resize(final_img, (1366, 768))
     # cv2.imshow('Lets wear Glasses', final_img)
-    cv2.imwrite( "media/output.jpg", final_img)
+    cv2.imwrite(outputname, final_img)
     cv2.waitKey()
     cv2.destroyAllWindows()
