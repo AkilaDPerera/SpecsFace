@@ -22,12 +22,14 @@ def processImages(request):
 
     uploaded_face_url = fs.url(face_url)
     uploaded_frame_url = fs.url(frame_url)
+    return HttpResponse(uploaded_face_url)
+    # face_spec.process_image("."+uploaded_face_url, "."+uploaded_frame_url)
     
-    face_spec.process_image("."+uploaded_face_url, "."+uploaded_frame_url)
-    
-    # Clear storage
-    fs.delete(face.name)
-    fs.delete(frame.name)
+    # # Clear storage
+    # fs.delete(face.name)
+    # fs.delete(frame.name)
 
-    return HttpResponse(base64.b64encode(open("media/output.jpg", "rb").read()), content_type="image/png")
+    # img = open("media/output.jpg", "rb").read()
+
+    # return HttpResponse(base64.b64encode(img), content_type="image/png")
 
